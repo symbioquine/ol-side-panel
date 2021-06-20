@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "brace-style": off,
+    "padded-blocks": off,
+    "no-underscore-dangle": off,
+    'max-len': ["error", { "code": 140 }]
+  },
+  "parserOptions": {
+    "ecmaVersion": 11,
+  },
+}
