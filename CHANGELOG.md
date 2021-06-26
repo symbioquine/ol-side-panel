@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2021-06-26
+
+### Changed
+
+- Updated readme to include screenshot and links to the docs/example
+
 ## [1.0.2] - 2021-06-26
 
 ### Fixed
@@ -24,7 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Release
 
-[Unreleased]: https://github.com/symbioquine/ol-side-panel/compare/1.0.2...HEAD
+[Unreleased]: https://github.com/symbioquine/ol-side-panel/compare/1.0.3...HEAD
+[1.0.2]: https://github.com/symbioquine/ol-side-panel/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/symbioquine/ol-side-panel/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/symbioquine/ol-side-panel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/symbioquine/ol-side-panel/releases/tag/1.0.0
