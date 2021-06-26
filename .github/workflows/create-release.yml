@@ -67,6 +67,8 @@ jobs:
           node-version: '16.x'
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm run build
+      - run: npm run docs
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -81,6 +83,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '16.x'
+    - run: npm ci
+    - run: npm run build
+    - run: npm run docs
     - name: Cleanup and prepare pages
       run: |
         rm -rf ./gh-pages-staging
