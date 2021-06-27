@@ -14,11 +14,11 @@ ol-side-panel is inspired by and originally based on the code of [Turbo87/sideba
 ## Getting started
 
 ```sh
-npm i ol-grid
+npm i ol-side-panel
 ```
 
 ```javascript
-import SidePanel from 'ol-side-panel';
+import { SidePanel } from 'ol-side-panel';
 
 const sidePanel = new SidePanel();
 

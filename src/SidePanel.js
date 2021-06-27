@@ -14,7 +14,7 @@ import './SidePanel.css';
  * @observableProperty {SidePanelPane} activePane - The currently active pane - or null if no pane is active.
  * @extends external:Control
  * @example
- * import SidePanel from 'ol-side-panel';
+ * import { SidePanel } from 'ol-side-panel';
  *
  * const sidePanel = new SidePanel();
  *

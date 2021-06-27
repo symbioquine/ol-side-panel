@@ -1,6 +1,6 @@
 {
   "name": "ol-side-panel",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A responsive tabbed side panel for OpenLayers",
   "license": "MIT",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "https://github.com/symbioquine/ol-side-panel.git"
   },
   "homepage": "https://symbioquine.github.io/ol-side-panel/latest/docs",
+  "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
     "fix-lint": "eslint --fix src",
