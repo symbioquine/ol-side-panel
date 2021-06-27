@@ -1,0 +1,195 @@
+.ol-side-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2000;
+  padding: 0;
+  border-radius: 0;
+}
+
+.ol-side-panel-collapsed .ol-side-panel {
+  width: 40px;
+}
+
+.ol-side-panel .ol-side-panel-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.ol-side-panel .ol-side-panel-tabs > button {
+  display: block;
+  width: 100%;
+  line-height: 40px;
+  text-decoration: none;
+  text-align: center;
+  margin: 0px;
+  width: 100%;
+  height: 40px;
+  font-size: 12pt;
+  overflow: hidden;
+  transition: all 80ms;
+  cursor: default;
+}
+
+.ol-control .ol-side-panel-tabs > button {
+  border-radius: 0px;
+}
+
+.ol-side-panel-tabs > button.active {
+  background-color: rgba(0, 60, 136, 0.7);
+}
+
+.ol-side-panel-tabs > .ol-side-panel-tabs-separator {
+  margin-top: auto;
+  order: 100;
+}
+
+.ol-side-panel-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40px;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.map-with-ol-side-panel.ol-side-panel-collapsed .ol-side-panel-content {
+  display: none;
+  overflow-y: hidden;
+}
+
+.ol-side-panel-pane {
+  display: none;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+
+.ol-side-panel-pane.active {
+  display: block;
+}
+
+.ol-side-panel-header {
+  margin: -10px -20px 0;
+  height: 40px;
+  padding: 0 20px;
+  line-height: 40px;
+  font-size: 14.4pt;
+}
+
+.ol-side-panel-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ol-side-panel-tabs {
+  overflow: hidden;
+}
+
+.map-with-ol-side-panel .ol-control:not(.ol-side-panel), .map-with-ol-side-panel .ol-scale-line {
+  margin-left: 100%;
+}
+
+.map-with-ol-side-panel.ol-side-panel-collapsed .ol-control:not(.ol-side-panel), .map-with-ol-side-panel .ol-scale-line {
+  margin-left: 42px;
+}
+
+@media (min-width : 768px) {
+  .ol-side-panel {
+    top: 6px;
+    bottom: 6px;
+    left: 6px;
+    transition: width 500ms;
+    border: 3px solid transparent;
+    border-radius: 4px;
+  }
+
+  .ol-side-panel-tabs {
+    border-radius: 2px 0 0 2px;
+  }
+
+  .ol-side-panel-content {
+    border-radius: 0 2px 2px 0;
+  }
+
+  .map-with-ol-side-panel .ol-control:not(.ol-side-panel ), .map-with-ol-side-panel .ol-scale-line {
+    transition: margin-left 500ms;
+  }
+
+  .map-with-ol-side-panel.ol-side-panel-collapsed .ol-control:not(.ol-side-panel), .map-with-ol-side-panel.ol-side-panel-collapsed .ol-scale-line {
+    margin-left: 52px;
+  }
+}
+
+@media (min-width : 768px) and (max-width: 991px) {
+  .ol-side-panel {
+    width: 305px;
+  }
+
+  .ol-side-panel-pane {
+    min-width: 265px;
+  }
+
+  .map-with-ol-side-panel .ol-control:not(.ol-side-panel ), .map-with-ol-side-panel .ol-scale-line {
+    margin-left: 317px;
+  }
+
+  .map-with-ol-side-panel.ol-side-panel-collapsed .ol-control:not(.ol-side-panel), .map-with-ol-side-panel.ol-side-panel-collapsed .ol-scale-line {
+    margin-left: 52px;
+  }
+}
+
+@media (min-width : 992px) and (max-width: 1199px) {
+  .ol-side-panel {
+    width: 390px;
+  }
+
+  .ol-side-panel-pane {
+    min-width: 350px;
+  }
+
+  .map-with-ol-side-panel .ol-control:not(.ol-side-panel ), .map-with-ol-side-panel .ol-scale-line {
+    margin-left: 402px;
+  }
+
+  .map-with-ol-side-panel.ol-side-panel-collapsed .ol-control:not(.ol-side-panel), .map-with-ol-side-panel.ol-side-panel-collapsed .ol-scale-line {
+    margin-left: 52px;
+  }
+}
+
+@media (min-width : 1200px) {
+  .ol-side-panel {
+    width: 460px;
+  }
+
+  .ol-side-panel-pane {
+    min-width: 420px;
+  }
+
+  .map-with-ol-side-panel .ol-control:not(.ol-side-panel ), .map-with-ol-side-panel .ol-scale-line {
+    margin-left: 472px;
+  }
+
+  .map-with-ol-side-panel.ol-side-panel-collapsed .ol-control:not(.ol-side-panel), .map-with-ol-side-panel.ol-side-panel-collapsed .ol-scale-line {
+    margin-left: 52px;
+  }
+}
+
+
