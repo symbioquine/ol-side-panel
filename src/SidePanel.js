@@ -67,7 +67,7 @@ class SidePanel extends Control {
 
       });
       this.panes.on('remove', (evt) => {
-        tabList.removeChild(evt.element.tabRef_);
+        tabList.removeChild(evt.element.tabRef_.element_);
       });
 
       tabList.appendChild(el('div', { class: 'ol-side-panel-tabs-separator' }));
