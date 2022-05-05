@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>SidePanel.js - ol-side-panel</title>
+    
+    <meta name="description" content="A clean, responsive documentation template theme for JSDoc 3." />
+    
+        <meta name="keywords" content="jsdoc, docdash" />
+        <meta name="keyword" content="jsdoc, docdash" />
+    
+    
+    
+    <meta property="og:title" content="Docdash"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://cloud.githubusercontent.com/assets/447956/13398144/4dde7f36-defd-11e5-8909-1a9013302cb9.png"/>
+    <meta property="og:site_name" content="Docdash"/>
+    <meta property="og:url" content="http://clenemt.github.io/docdash/"/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h2><a href="https://github.com/symbioquine/ol-side-panel" class="menu-item" id="repository" >Github repo</a></h2><h3>Classes</h3><ul><li><a href="SidePanel.html">SidePanel</a><ul class='methods'><li data-type='method' style='display: none;'><a href="SidePanel.html#addWidgetElement">addWidgetElement</a></li><li data-type='method' style='display: none;'><a href="SidePanel.html#definePane">definePane</a></li><li data-type='method' style='display: none;'><a href="SidePanel.html#getPaneById">getPaneById</a></li><li data-type='method' style='display: none;'><a href="SidePanel.html#removePaneById">removePaneById</a></li><li data-type='method' style='display: none;'><a href="SidePanel.html#setMap">setMap</a></li></ul></li><li><a href="SidePanelPane.html">SidePanelPane</a><ul class='methods'><li data-type='method' style='display: none;'><a href="SidePanelPane.html#addWidgetElement">addWidgetElement</a></li><li data-type='method' style='display: none;'><a href="SidePanelPane.html#remove">remove</a></li></ul></li><li><a href="SidePanelWidget.html">SidePanelWidget</a><ul class='methods'><li data-type='method' style='display: none;'><a href="SidePanelWidget.html#remove">remove</a></li></ul></li></ul><h3>Externals</h3><ul><li><a href="external-BaseObject.html">BaseObject</a></li><li><a href="external-Collection.html">Collection</a></li><li><a href="external-Control.html">Control</a></li><li><a href="external-Element.html">Element</a></li><li><a href="external-Map.html">Map</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">SidePanel.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Collection from 'ol/Collection';
+import Control from 'ol/control/Control';
+
+import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
+
+import el from './el';
+import SidePanelPane from './SidePanelPane';
+import SidePanelTab from './SidePanelTab';
+
+import './SidePanel.css';
+
+/**
+ * Top-level {@link external:Control|Control} for ol-side-panel - provides a responsive tabbed left side panel for OpenLayers.
+ * @observableProperty {SidePanelPane} activePane - The currently active pane - or null if no pane is active.
+ * @extends external:Control
+ * @example
+ * import { SidePanel } from 'ol-side-panel';
+ *
+ * const sidePanel = new SidePanel();
+ *
+ * map.addControl(sidePanel);
+ *
+ * const layersPane = sidePanel.definePane({
+ *   paneId: 'layers',
+ *   name: "Layers",
+ *   icon: '&lt;i class="bi bi-layers-half">&lt;/i>'
+ * });
+ *
+ * const layersGreeting = document.createElement('p');
+ * layersGreeting.innerHTML = "Hi there layers!";
+ *
+ * layersPane.addWidgetElement(layersGreeting);
+ */
+class SidePanel extends Control {
+
+  constructor() {
+
+    super({
+      element: document.createElement('div'),
+      activePane: null,
+    });
+
+    const { element } = this;
+    element.className = `ol-side-panel ${CLASS_UNSELECTABLE} ${CLASS_CONTROL}`;
+
+    window.nextOlSidePanelPaneUniqId = window.nextOlSidePanelPaneUniqId || 0;
+
+    /**
+     * @type {external:Collection&lt;SidePanelPane>}
+     * @private
+     */
+    this.panes = new Collection();
+
+    element.appendChild(el('div', { class: 'ol-side-panel-tabs', role: 'tablist' }, (tabList) => {
+      this.panes.on('add', (evt) => {
+        const pane = evt.element;
+
+        tabList.appendChild(SidePanelTab.fromPane(pane).element_);
+
+        pane.on('change:active', () => {
+          if (!pane.get('active') &amp;&amp; pane === this.get('activePane')) {
+            this.updateActivePane_(null);
+          } else if (pane.get('active')) {
+            this.updateActivePane_(pane);
+          }
+        });
+
+      });
+      this.panes.on('remove', (evt) => {
+        tabList.removeChild(evt.element.tabRef_.element_);
+      });
+
+      tabList.appendChild(el('div', { class: 'ol-side-panel-tabs-separator' }));
+
+    }));
+
+    element.appendChild(el('div', { class: 'ol-side-panel-content' }, (sidePanelContent) => {
+      this.panes.on('add', evt => sidePanelContent.appendChild(evt.element.element_));
+      this.panes.on('remove', (evt) => {
+        sidePanelContent.removeChild(evt.element.element_);
+        if (evt.element === this.get('activePane')) {
+          this.updateActivePane_(null);
+        }
+      });
+    }));
+
+    this.on('change:activePane', () => {
+      if (this.get('activePane')) {
+        this.getMap().getTargetElement().className = this.getMap().getTargetElement().className.replace(/\bol-side-panel-collapsed\b/g, '');
+      } else if (this.getMap().getTargetElement().className.search(/\bol-side-panel-collapsed\b/) === -1) {
+        this.getMap().getTargetElement().className += ' ol-side-panel-collapsed';
+      }
+    });
+
+  }
+
+  /**
+   * Defines a new pane.
+   * @param {Object} args - pane args
+   * @param {String} args.paneId - Locally unique identifier for the pane - used to refer to the pane within an
+   *  instance of the ol-side-panel control.
+   * @param {String|external:Element} args.name - Name of the pane - User-facing name of this pane.
+   * @param {String|external:Element} args.icon - Icon of the pane - User-facing icon for this pane.
+   * @param {Number} args.weight - Weight of the pane - controls the order of
+   *  the pane tabs with lower numbers appearing closer to the top and higher numbers appearing farther
+   *  down. Panes with a weight >= 100 will have their icons appear at the bottom of the tab bar.
+   * @returns {SidePanelPane} A reference to the newly defined pane.
+   */
+  definePane({
+    paneId, name, icon, weight,
+  }) {
+    /* eslint-disable-next-line no-plusplus */
+    const paneUniqId = window.nextOlSidePanelPaneUniqId++;
+    const pane = new SidePanelPane({
+      paneId, paneUniqId, name, icon, weight,
+    });
+    this.panes.push(pane);
+    return pane;
+  }
+
+  /**
+   * Get the pane with the specified identifier.
+   * @param {String} paneId - The identifier of the pane to get - this is the same identifier that was
+   *  passed into {@link SidePanel#definePane|definePane}.
+   * @returns {SidePanelPane} A reference to the pane.
+   */
+  getPaneById(paneId) {
+    return this.panes.getArray().find(p => p.paneId_ === paneId);
+  }
+
+  /**
+   * Remove the pane with the specified identifier.
+   * @param {String} paneId - The identifier of the pane to remove - this is the same identifier that was
+   *  passed into {@link SidePanel#definePane|definePane}.
+   */
+  removePaneById(paneId) {
+    this.removePane_(this.getPaneById(paneId));
+  }
+
+  /**
+   * Remove the pane with the specified identifier.
+   * @param {String} paneId - The identifier of the pane to remove - this is the same identifier that was
+   *  passed into {@link SidePanel#definePane|definePane}.
+   * @private
+   */
+  removePane_(pane) {
+    this.panes.remove(pane);
+  }
+
+  /**
+   * Add an HTML element to the named pane as a new {@link SidePanelWidget}.
+   * @param {String} paneId The identifier of the pane to add the widget to.
+   * @param {external:Element} widgetElement
+   * @returns {SidePanelWidget} A reference to the newly added widget.
+   */
+  addWidgetElement(paneId, widgetElement) {
+    return this.getPane(paneId).addWidgetElement(widgetElement);
+  }
+
+  updateActivePane_(pane) {
+    this.set('activePane', pane);
+    this.panes.getArray().filter(p => p !== pane).forEach(p => p.set('active', false));
+  }
+
+  /**
+   * @param {external:Map} map - The OpenLayers map instance this control is being added to.
+   */
+  setMap(map) {
+    const oldMap = this.getMap();
+    if (map === oldMap) {
+      return;
+    }
+
+    const removeClassFromOldMapTarget = (oldMapTarget) => {
+      if (oldMapTarget) {
+        oldMapTarget.className.replace(/\bmap-with-ol-side-panel\b/g, '');
+      }
+    };
+
+    const addClassToNewMapTarget = (newMapTarget) => {
+      if (newMapTarget) {
+
+        /* eslint-disable-next-line no-param-reassign */
+        newMapTarget.className += ' map-with-ol-side-panel ol-side-panel-collapsed';
+      }
+    };
+
+    if (oldMap) {
+      removeClassFromOldMapTarget(oldMap.getTargetElement());
+      // Cleanup the old event listener
+      if (this.onMapTargetChange) {
+        oldMap.un('change:target', this.onMapTargetChange.listener);
+        this.onMapTargetChange = null;
+      }
+    }
+    super.setMap(map);
+
+    if (map) {
+      addClassToNewMapTarget(map.getTargetElement());
+
+      const handleMapTargetChange = (evt) => {
+        removeClassFromOldMapTarget(evt.oldValue);
+        addClassToNewMapTarget(map.getTargetElement());
+      };
+
+      this.onMapTargetChange = map.getInteractions().on('change:target', handleMapTargetChange);
+    }
+  }
+
+}
+
+export default SidePanel;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu May 05 2022 19:13:55 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+</body>
+</html>
