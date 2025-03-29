@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const info = require('./package.json');
-
 module.exports = {
   entry: `${__dirname}/src/main.js`,
   output: {
