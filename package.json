@@ -1,6 +1,6 @@
 {
   "name": "ol-side-panel",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A responsive tabbed side panel for OpenLayers",
   "license": "MIT",
   "repository": {
@@ -38,6 +38,7 @@
     "raw-loader": "^4.0.2",
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.2",
+    "taffydb": "2.6.2",
     "webpack": "^5.36.0",
     "webpack-cli": "^5.1.4"
   },
